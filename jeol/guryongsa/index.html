@@ -17,7 +17,10 @@
 #panoc{position:absolute!important;left:0!important;top:0!important;width:100%!important;height:100%!important}
 #msg{position:absolute;z-index:11;left:12px;right:12px;top:60px;background:#fff;border-radius:8px;padding:10px;font-size:14px;display:none}
 .m{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#E8590C;color:#fff;font:700 13px sans-serif;border:2px solid #fff;box-shadow:0 1px 4px #0006}
-.s{background:#555;width:20px;height:20px;font-size:10px}
+.s{background:#555;width:22px;height:22px;font-size:11px}
+.g{box-shadow:0 0 0 3px rgba(255,255,255,.55),0 0 10px 3px var(--c),0 1px 4px #0006}
+.q{border-style:dashed}
+.lk{background:#c0392b!important}
 .t{position:absolute;left:26px;top:2px;white-space:nowrap;font:700 12px sans-serif;color:#fff;text-shadow:0 0 3px #000,0 0 3px #000}
 #tg{position:fixed;z-index:6;right:8px;top:58px;display:flex;gap:6px}#tg .g{display:flex}#tg .st{border-radius:8px}#tg button{border:1px solid #bbb;background:#fff;padding:6px 12px;font-size:13px}#tg button.on{background:#16161C;color:#fff}#tg .g button:first-child{border-radius:8px 0 0 8px}#tg .g button:last-child{border-radius:0 8px 8px 0}
 #warn{position:fixed;z-index:7;left:12px;right:12px;bottom:160px;background:#fff;border:1px solid #c33;border-radius:8px;padding:10px;font-size:14px;display:none}
@@ -33,7 +36,7 @@
 <a class="back" href="#">트립미터 블로그 글로 돌아가기</a></div>
 <div id="pano"><button class="btn x" id="px">지도로 돌아가기</button><div id="msg"></div><div id="panoc"></div></div>
 <script>
-var DATA={"center": [128.0497, 37.3994], "time": "경내만 41~77분", "places": []};
+var DATA={"center": [128.0497, 37.3994], "time": "경내 한 바퀴 23~51분", "places": [{"n": 3, "name": "사천왕문", "kind": "stage", "lon": 128.0501855, "lat": 37.3993308, "color": "#9fb1cf", "desc": "길목 카드 사천왕 · 미션: 비파를 안은 천왕과 발 아래 악귀의 얼굴 찾기 · 2~5분"}, {"n": "A", "name": "연화정", "kind": "sub", "lon": 128.0499612, "lat": 37.399169, "color": "#e6ecf2", "desc": "팔각 지붕 정자 · 미션: 지붕 모서리 세어 보기 · 1~2분", "lock": false}, {"n": 4, "name": "보광루", "kind": "stage", "lon": 128.0498967, "lat": 37.3993342, "color": "#9fb1cf", "desc": "길목 카드 보광루 · 미션: 현판 普光樓 오른쪽부터 읽고 기둥 비교 · 2~5분"}, {"n": 5, "name": "대웅전", "kind": "stage", "lon": 128.049576, "lat": 37.3992922, "color": "#b98cff", "desc": "대표 카드 대웅전 · 미션: 현판 읽기, 마당 좌우의 승사 찾기 · 3~8분"}, {"n": 6, "name": "이름 이야기 (대략 이 근처)", "kind": "stage", "lon": 128.049699, "lat": 37.39922, "color": "#2ed3c8", "hidden": true, "desc": "히든 카드 구룡사 · 미션: 안내판에서 거북 모양 글자 龜 찾기 · 자리는 대략만 표시 · 1~3분"}, {"n": "B", "name": "지장전", "kind": "sub", "lon": 128.0495966, "lat": 37.3990491, "color": "#e6ecf2", "desc": "대웅전 남쪽 · 미션: 현판 글자 읽기 · 1~2분", "lock": false}, {"n": "C", "name": "삼성각", "kind": "sub", "lon": 128.0494202, "lat": 37.3989621, "color": "#e6ecf2", "desc": "대개 산신·칠성·독성을 모시는 작은 전각 · 미션: 현판 三聖閣 읽기 · 1~3분", "lock": false}, {"n": "D", "name": "응진전", "kind": "sub", "lon": 128.0490952, "lat": 37.3994639, "color": "#e6ecf2", "desc": "대개 나한을 모시는 전각 · 미션: 현판 읽기 · 1~2분", "lock": false}, {"n": "E", "name": "관음전", "kind": "sub", "lon": 128.0493431, "lat": 37.3994753, "color": "#e6ecf2", "desc": "대개 관세음보살을 모시는 전각 · 미션: 대웅전과 크기 비교 · 1~2분", "lock": false}, {"n": "F", "name": "조사전", "kind": "sub", "lon": 128.0491182, "lat": 37.3999591, "color": "#e6ecf2", "desc": "대개 절을 이끈 옛 스님(조사)의 영정을 모시는 곳 · 미션: 끝에서 마당 돌아보기 · 1~3분", "lock": false}, {"n": "G", "name": "요사채", "kind": "sub", "lon": 128.0496183, "lat": 37.3997816, "color": "#ff8a80", "desc": "스님 생활 공간 · 잠김, 밖에서 이름만 · 1분", "lock": true}, {"n": "H", "name": "심검당", "kind": "sub", "lon": 128.0498228, "lat": 37.3997495, "color": "#ff8a80", "desc": "스님 수행·생활 승사 · 잠김, 밖에서 이름만 · 1분", "lock": true}, {"n": "I", "name": "설선당", "kind": "sub", "lon": 128.0496708, "lat": 37.3995704, "color": "#e6ecf2", "desc": "종무소(절 사무실) · 미션: 순례 도장 받기 · 1~3분", "lock": false}, {"n": "J", "name": "범종각", "kind": "sub", "lon": 128.049899, "lat": 37.3995037, "color": "#e6ecf2", "desc": "대개 범종·법고·목어·운판을 두는 곳 · 미션: 종 찾기 · 1~3분", "lock": false}, {"n": 7, "name": "구룡계곡 길", "kind": "stage", "lon": 128.0503394, "lat": 37.398959, "color": "#9fb1cf", "desc": "길목 카드 구룡계곡 길 · 세렴폭포 2.1km, 비로봉 쪽으로 이어지는 길"}], "route": [[128.0503142, 37.3992715], [128.0501855, 37.3993308], [128.0499612, 37.399169], [128.0498967, 37.3993342], [128.049576, 37.3992922], [128.0495966, 37.3990491], [128.0494202, 37.3989621], [128.0490952, 37.3994639], [128.0493431, 37.3994753], [128.0491182, 37.3999591], [128.0496183, 37.3997816], [128.0498228, 37.3997495], [128.0496708, 37.3995704], [128.049899, 37.3995037], [128.0501855, 37.3993308], [128.0503064, 37.399043]]};
 var DEBUG=null;
 window.navermap_authFailure=function(){var w=document.getElementById('warn');w.style.display='block';w.textContent='지도를 불러오지 못했습니다. 아래 버튼으로 네이버 지도 앱에서 봐 주세요. (등록 주소: '+location.origin+')';};
 </script>
@@ -44,13 +47,14 @@ var map=new naver.maps.Map('map',{center:new naver.maps.LatLng(DATA.center[1],DA
 var pano=null,cur=null,path=[];
 function setT(h){map.setMapTypeId(h?naver.maps.MapTypeId.HYBRID:naver.maps.MapTypeId.NORMAL);document.getElementById('bn').className=h?'':'on';document.getElementById('bh').className=h?'on':'';}
 document.getElementById('bn').onclick=function(){setT(false)};document.getElementById('bh').onclick=function(){setT(true)};
-function show(p){cur=p;document.getElementById('st').textContent=(p.n?p.n+'. ':'')+p.name;document.getElementById('sd').textContent=p.desc||'경내 전각';
+function show(p){cur=p;var tt=(p.kind==='sub'?'서브 '+p.n+' · ':'STAGE '+p.n+' · ')+p.name;document.getElementById('st').textContent=tt;document.getElementById('sd').textContent=p.desc||'경내 전각';
  document.getElementById('sb').innerHTML='<button class="btn" onclick="openPano()">이 자리 거리뷰</button>';}
-function mk(p){var el='<div style="position:relative"><div class="m'+(p.n?'':' s')+'">'+(p.n||'')+'</div><div class="t">'+p.name+'</div></div>';
+function mk(p){var cls='m'+(p.kind==='sub'?' s':' g')+(p.hidden?' q':'')+(p.lock?' lk':'');
+ var el='<div style="position:relative;--c:'+(p.color||'#E8590C')+'"><div class="'+cls+'" style="background:'+(p.lock?'':(p.color||'#E8590C'))+';--c:'+(p.color||'#E8590C')+'">'+(p.hidden?'?':p.n)+'</div><div class="t">'+p.name+(p.lock?' (잠김)':'')+'</div></div>';
  var m=new naver.maps.Marker({map:map,position:new naver.maps.LatLng(p.lat,p.lon),icon:{content:el,anchor:new naver.maps.Point(13,13)}});
  naver.maps.Event.addListener(m,'click',function(){show(p)});return m;}
-DATA.places.forEach(function(p){mk(p);if(p.n)path[p.n-1]=new naver.maps.LatLng(p.lat,p.lon);});
-new naver.maps.Polyline({map:map,path:path.filter(Boolean),strokeColor:'#FFB300',strokeWeight:3,strokeStyle:'shortdash',strokeOpacity:.9});
+DATA.places.forEach(function(p){mk(p);});
+new naver.maps.Polyline({map:map,path:(DATA.route||[]).map(function(q){return new naver.maps.LatLng(q[1],q[0])}),strokeColor:'#FFB300',strokeWeight:4,strokeStyle:'shortdash',strokeOpacity:.9,endIcon:naver.maps.PointingIcon.OPEN_ARROW});
 if(DEBUG){DEBUG.forEach(function(p){new naver.maps.Marker({map:map,position:new naver.maps.LatLng(p.lat,p.lon),title:p.name,icon:{content:'<div style="background:#0a0;color:#fff;font:10px sans-serif;padding:1px 3px;border-radius:3px">'+p.name+'</div>'}})});}
 var START={lat:37.39935,lon:128.0501,pan:-90};
 var street=new naver.maps.StreetLayer(),stOn=false,pm=null;
