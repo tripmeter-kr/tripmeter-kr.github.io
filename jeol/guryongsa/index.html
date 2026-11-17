@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>구룡사 경내 지도 · 트립미터</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:#16161C}
+#top{position:fixed;z-index:5;top:0;left:0;right:0;background:#fff;padding:10px 14px;border-bottom:1px solid #e4e4e4;display:flex;justify-content:space-between;align-items:center;gap:8px}
+#top b{font-size:16px}#top span{font-size:13px;background:#FFF1C2;border-radius:12px;padding:3px 9px;white-space:nowrap}
+#map{position:fixed;top:48px;left:0;right:0;bottom:150px}
+#sheet{position:fixed;z-index:5;left:0;right:0;bottom:0;height:150px;background:#fff;border-top:1px solid #ddd;padding:12px 14px;overflow:auto}
+#sheet h3{margin:0 0 4px;font-size:17px}#sheet p{margin:0 0 8px;font-size:14px;line-height:1.5}
+.btn{display:inline-block;border:0;background:#16161C;color:#fff;border-radius:8px;padding:8px 12px;font-size:14px;margin-right:6px}
+.back{font-size:12px;color:#555;display:block;margin-top:6px}
+#pano{position:fixed;z-index:9;inset:0;background:#000;display:none}
+#pano .x{position:absolute;z-index:10;top:10px;right:10px}
+#panoc{position:absolute;inset:0}
+#msg{position:absolute;z-index:11;left:12px;right:12px;top:60px;background:#fff;border-radius:8px;padding:10px;font-size:14px;display:none}
+.m{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#E8590C;color:#fff;font:700 13px sans-serif;border:2px solid #fff;box-shadow:0 1px 4px #0006}
+.s{background:#555;width:20px;height:20px;font-size:10px}
+.t{position:absolute;left:26px;top:2px;white-space:nowrap;font:700 12px sans-serif;color:#fff;text-shadow:0 0 3px #000,0 0 3px #000}
+#attr{position:fixed;z-index:6;right:6px;bottom:154px;font-size:10px;color:#fff;text-shadow:0 0 2px #000}
+</style></head><body>
+<div id="top"><b>구룡사 경내</b><span id="time"></span></div>
+<div id="map"></div>
+<div id="attr">지도 © NAVER</div>
+<div id="sheet"><h3 id="st">번호 마커를 눌러 보세요</h3><p id="sd">사천왕문 → 보광루 → 대웅전 순서로 걷는 길입니다.</p><div id="sb"></div>
+<a class="back" href="#">트립미터 블로그 글로 돌아가기</a></div>
+<div id="pano"><button class="btn x" id="px">닫기</button><div id="msg"></div><div id="panoc"></div></div>
+<script>
+var DATA={"center": [128.0497, 37.3994], "time": "경내만 41~77분", "places": [{"n": 1, "name": "사천왕문", "desc": "구룡사의 두 번째 문이에요. 문 안에서 네 천왕이 절을 지킵니다.", "lon": 128.0501951, "lat": 37.3993589}, {"n": 2, "name": "보광루", "desc": "대웅전 마당으로 들어가는 2층 누각이에요. 길이 누각 아래로 나 있어서 그 밑을 지나갑니다.", "lon": 128.0498862, "lat": 37.3993209}, {"n": 3, "name": "대웅전", "desc": "구룡사의 중심 법당이에요. 지금 건물은 불에 탄 뒤 다시 지은 거예요.", "lon": 128.0495703, "lat": 37.3992918}, {"n": 0, "name": "관음전", "desc": "", "lon": 128.0493612, "lat": 37.3994811}, {"n": 0, "name": "삼성각", "desc": "", "lon": 128.0494464, "lat": 37.3989885}, {"n": 0, "name": "범종각", "desc": "", "lon": 128.0498796, "lat": 37.3994994}, {"n": 0, "name": "응진전", "desc": "", "lon": 128.0491165, "lat": 37.3994838}, {"n": 0, "name": "지장전", "desc": "", "lon": 128.0496161, "lat": 37.399095}, {"n": 0, "name": "조사전", "desc": "", "lon": 128.049137, "lat": 37.399988}, {"n": 0, "name": "설선당", "desc": "", "lon": 128.0496891, "lat": 37.3995775}, {"n": 0, "name": "심검당", "desc": "", "lon": 128.0498227, "lat": 37.3997462}, {"n": 0, "name": "연화정", "desc": "", "lon": 128.0499805, "lat": 37.3991819}]};
+var DEBUG=null;
+window.navermap_authFailure=function(){var s=document.getElementById('sd');document.getElementById('st').textContent='지도 인증 실패';s.textContent='이 주소가 지도 서비스에 등록되지 않았습니다: '+location.origin;};
+</script>
+<script src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=e7fjuhd862&submodules=panorama"></script>
+<script>
+document.getElementById('time').textContent=DATA.time;
+var map=new naver.maps.Map('map',{center:new naver.maps.LatLng(DATA.center[1],DATA.center[0]),zoom:19,minZoom:15,maxZoom:21,mapTypeId:naver.maps.MapTypeId.HYBRID,mapDataControl:false,scaleControl:false,logoControl:true});
+var pano=null,cur=null,path=[];
+function show(p){cur=p;document.getElementById('st').textContent=(p.n?p.n+'. ':'')+p.name;document.getElementById('sd').textContent=p.desc||'경내 전각';
+ document.getElementById('sb').innerHTML='<button class="btn" onclick="openPano()">이 자리 거리뷰</button>';}
+function mk(p){var el='<div style="position:relative"><div class="m'+(p.n?'':' s')+'">'+(p.n||'')+'</div><div class="t">'+p.name+'</div></div>';
+ var m=new naver.maps.Marker({map:map,position:new naver.maps.LatLng(p.lat,p.lon),icon:{content:el,anchor:new naver.maps.Point(13,13)}});
+ naver.maps.Event.addListener(m,'click',function(){show(p)});return m;}
+DATA.places.forEach(function(p){mk(p);if(p.n)path[p.n-1]=new naver.maps.LatLng(p.lat,p.lon);});
+new naver.maps.Polyline({map:map,path:path.filter(Boolean),strokeColor:'#FFB300',strokeWeight:3,strokeStyle:'shortdash',strokeOpacity:.9});
+if(DEBUG){DEBUG.forEach(function(p){new naver.maps.Marker({map:map,position:new naver.maps.LatLng(p.lat,p.lon),title:p.name,icon:{content:'<div style="background:#0a0;color:#fff;font:10px sans-serif;padding:1px 3px;border-radius:3px">'+p.name+'</div>'}})});}
+function openPano(){if(!cur)return;var d=document.getElementById('pano');d.style.display='block';var m=document.getElementById('msg');m.style.display='none';
+ var pos=new naver.maps.LatLng(cur.lat,cur.lon);
+ if(!pano){pano=new naver.maps.Panorama('panoc',{position:pos,pov:{pan:0,tilt:0,fov:100},zoomControl:true});
+  naver.maps.Event.addListener(pano,'pano_status',function(s){if(s==='ERROR'){m.textContent='이 자리에는 거리뷰가 없습니다.';m.style.display='block';}else{m.style.display='none';
+   var loc=pano.getLocation&&pano.getLocation();if(loc&&loc.coord){var dd=map.getProjection().getDistance(pos,loc.coord);if(dd>30){m.textContent='가장 가까운 거리뷰는 약 '+Math.round(dd)+'m 떨어진 길 위입니다.';m.style.display='block';}}}});}
+ else{pano.setPosition(pos);}
+ setTimeout(function(){if(pano.setSize)pano.setSize(new naver.maps.Size(innerWidth,innerHeight));},50);}
+document.getElementById('px').onclick=function(){document.getElementById('pano').style.display='none';};
+</script></body></html>
