@@ -7,7 +7,7 @@
 *{box-sizing:border-box}html,body{margin:0;height:100%;font-family:-apple-system,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;color:#16161C}
 #top{position:fixed;z-index:5;top:0;left:0;right:0;background:#fff;padding:10px 14px;border-bottom:1px solid #e4e4e4;display:flex;justify-content:space-between;align-items:center;gap:8px}
 #top b{font-size:16px}#top span{font-size:13px;background:#FFF1C2;border-radius:12px;padding:3px 9px;white-space:nowrap}
-#map{position:fixed;top:48px;left:0;right:0;bottom:150px}
+#mapwrap{position:fixed;top:48px;left:0;right:0;bottom:150px}#map{width:100%;height:100%}
 #sheet{position:fixed;z-index:5;left:0;right:0;bottom:0;height:150px;background:#fff;border-top:1px solid #ddd;padding:12px 14px;overflow:auto}
 #sheet h3{margin:0 0 4px;font-size:17px}#sheet p{margin:0 0 8px;font-size:14px;line-height:1.5}
 .btn{display:inline-block;border:0;background:#16161C;color:#fff;border-radius:8px;padding:8px 12px;font-size:14px;margin-right:6px}
@@ -25,7 +25,7 @@
 #attr{position:fixed;z-index:6;right:6px;bottom:154px;font-size:10px;color:#fff;text-shadow:0 0 2px #000}
 </style></head><body>
 <div id="top"><b>구룡사 경내</b><span id="time"></span></div>
-<div id="map"></div>
+<div id="mapwrap"><div id="map"></div></div>
 <div id="tg"><button id="bn" class="on">일반</button><button id="bh">위성</button></div>
 <div id="warn"></div>
 <div id="attr">지도 © NAVER</div>
