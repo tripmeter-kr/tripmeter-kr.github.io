@@ -12,26 +12,26 @@
 #sheet h3{margin:0 0 4px;font-size:17px}#sheet p{margin:0 0 8px;font-size:14px;line-height:1.5}
 .btn{display:inline-block;border:0;background:#16161C;color:#fff;border-radius:8px;padding:8px 12px;font-size:14px;margin-right:6px}
 .back{font-size:12px;color:#555;display:block;margin-top:6px}
-#pano{position:fixed;z-index:9;inset:0;background:#000;display:none}
+#pano{position:fixed;z-index:9;left:0;right:0;bottom:0;height:55%;background:#000;display:none}
 #pano .x{position:absolute;z-index:10;top:10px;right:10px}
 #panoc{position:absolute;inset:0}
 #msg{position:absolute;z-index:11;left:12px;right:12px;top:60px;background:#fff;border-radius:8px;padding:10px;font-size:14px;display:none}
 .m{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#E8590C;color:#fff;font:700 13px sans-serif;border:2px solid #fff;box-shadow:0 1px 4px #0006}
 .s{background:#555;width:20px;height:20px;font-size:10px}
 .t{position:absolute;left:26px;top:2px;white-space:nowrap;font:700 12px sans-serif;color:#fff;text-shadow:0 0 3px #000,0 0 3px #000}
-#tg{position:fixed;z-index:6;right:8px;top:58px;display:flex}#tg button{border:1px solid #bbb;background:#fff;padding:6px 12px;font-size:13px}#tg button.on{background:#16161C;color:#fff}#tg button:first-child{border-radius:8px 0 0 8px}#tg button:last-child{border-radius:0 8px 8px 0}
+#tg{position:fixed;z-index:6;right:8px;top:58px;display:flex;gap:6px}#tg .g{display:flex}#tg .st{border-radius:8px}#tg button{border:1px solid #bbb;background:#fff;padding:6px 12px;font-size:13px}#tg button.on{background:#16161C;color:#fff}#tg .g button:first-child{border-radius:8px 0 0 8px}#tg .g button:last-child{border-radius:0 8px 8px 0}
 #warn{position:fixed;z-index:7;left:12px;right:12px;bottom:160px;background:#fff;border:1px solid #c33;border-radius:8px;padding:10px;font-size:14px;display:none}
 .btn{text-decoration:none}
 #attr{position:fixed;z-index:6;right:6px;bottom:154px;font-size:10px;color:#fff;text-shadow:0 0 2px #000}
 </style></head><body>
 <div id="top"><b>구룡사 경내</b><span id="time"></span></div>
 <div id="mapwrap"><div id="map"></div></div>
-<div id="tg"><button id="bn" class="on">일반</button><button id="bh">위성</button></div>
+<div id="tg"><div class="g"><button id="bn" class="on">일반</button><button id="bh">위성</button></div><button id="bs" class="st">거리뷰</button></div>
 <div id="warn"></div>
 <div id="attr">지도 © NAVER</div>
-<div id="sheet"><h3 id="st">구룡사 경내</h3><p id="sd">지도를 확대하면 전각 이름이 보입니다. 지도 가운데 자리의 거리뷰를 볼 수 있어요.</p><div id="sb"><button class="btn" onclick="openPano()">이 자리 거리뷰</button><a class="btn" target="_blank" rel="noopener" href="https://map.naver.com/p/search/구룡사">네이버 지도 앱에서 보기</a></div>
+<div id="sheet"><h3 id="st">구룡사 경내</h3><p id="sd">지도를 확대하면 전각 이름이 보입니다. 오른쪽 위 '거리뷰'를 켜면 파란 선이 보이고, 그 위를 누르면 그 자리 거리뷰가 열려요. 아래 버튼은 사천왕문 앞에서 시작합니다.</p><div id="sb"><button class="btn" onclick="openPano()">이 자리 거리뷰</button><a class="btn" target="_blank" rel="noopener" href="https://map.naver.com/p/search/구룡사">네이버 지도 앱에서 보기</a></div>
 <a class="back" href="#">트립미터 블로그 글로 돌아가기</a></div>
-<div id="pano"><button class="btn x" id="px">닫기</button><div id="msg"></div><div id="panoc"></div></div>
+<div id="pano"><button class="btn x" id="px">지도로 돌아가기</button><div id="msg"></div><div id="panoc"></div></div>
 <script>
 var DATA={"center": [128.0497, 37.3994], "time": "경내만 41~77분", "places": []};
 var DEBUG=null;
@@ -52,12 +52,22 @@ function mk(p){var el='<div style="position:relative"><div class="m'+(p.n?'':' s
 DATA.places.forEach(function(p){mk(p);if(p.n)path[p.n-1]=new naver.maps.LatLng(p.lat,p.lon);});
 new naver.maps.Polyline({map:map,path:path.filter(Boolean),strokeColor:'#FFB300',strokeWeight:3,strokeStyle:'shortdash',strokeOpacity:.9});
 if(DEBUG){DEBUG.forEach(function(p){new naver.maps.Marker({map:map,position:new naver.maps.LatLng(p.lat,p.lon),title:p.name,icon:{content:'<div style="background:#0a0;color:#fff;font:10px sans-serif;padding:1px 3px;border-radius:3px">'+p.name+'</div>'}})});}
-function openPano(){if(!cur){var c=map.getCenter();cur={lat:c.lat(),lon:c.lng()};}var d=document.getElementById('pano');d.style.display='block';var m=document.getElementById('msg');m.style.display='none';
- var pos=new naver.maps.LatLng(cur.lat,cur.lon);
- if(!pano){pano=new naver.maps.Panorama('panoc',{position:pos,pov:{pan:0,tilt:0,fov:100},zoomControl:true});
-  naver.maps.Event.addListener(pano,'pano_status',function(s){if(s==='ERROR'){m.textContent='이 자리에는 거리뷰가 없습니다.';m.style.display='block';}else{m.style.display='none';
-   var loc=pano.getLocation&&pano.getLocation();if(loc&&loc.coord){var dd=map.getProjection().getDistance(pos,loc.coord);if(dd>30){m.textContent='가장 가까운 거리뷰는 약 '+Math.round(dd)+'m 떨어진 길 위입니다.';m.style.display='block';}}}});}
- else{pano.setPosition(pos);}
- setTimeout(function(){if(pano.setSize)pano.setSize(new naver.maps.Size(innerWidth,innerHeight));},50);}
-document.getElementById('px').onclick=function(){document.getElementById('pano').style.display='none';};
+var START={lat:37.39935,lon:128.0501,pan:-90};
+var street=new naver.maps.StreetLayer(),stOn=false,pm=null;
+function setStreet(on){stOn=on;if(on)street.setMap(map);else street.setMap(null);document.getElementById('bs').className='st'+(on?' on':'');
+ document.getElementById('bs').style.cssText=on?'background:#16161C;color:#fff':'';}
+document.getElementById('bs').onclick=function(){setStreet(!stOn)};
+naver.maps.Event.addListener(map,'click',function(e){if(stOn)openPano(e.coord.lat(),e.coord.lng());});
+function say(t){var m=document.getElementById('msg');if(t){m.textContent=t;m.style.display='block';}else m.style.display='none';}
+function mark(ll){if(!pm)pm=new naver.maps.Marker({map:map,position:ll,zIndex:50,icon:{content:'<div style="width:18px;height:18px;border-radius:50%;background:#E03131;border:3px solid #fff;box-shadow:0 1px 5px #0008"></div>',anchor:new naver.maps.Point(9,9)}});else{pm.setPosition(ll);pm.setMap(map);}}
+function openPano(lat,lon,pan){var s0=(lat===undefined||typeof lat!=='number');var la=s0?START.lat:lat,lo=s0?START.lon:lon,pn=s0?START.pan:(pan||0);
+ document.getElementById('pano').style.display='block';say('');
+ var pos=new naver.maps.LatLng(la,lo);
+ if(!pano){pano=new naver.maps.Panorama('panoc',{position:pos,pov:{pan:pn,tilt:0,fov:100},zoomControl:true});
+  naver.maps.Event.addListener(pano,'pano_status',function(st){if(st==='ERROR'){say('이 자리엔 거리뷰가 없어요. 파란 선 위를 눌러 보세요.');}else{say('');}});
+  naver.maps.Event.addListener(pano,'pano_changed',function(){var p=pano.getPosition&&pano.getPosition();if(p)mark(p);});}
+ else{pano.setPosition(pos);if(pano.setPov)pano.setPov({pan:pn,tilt:0,fov:100});}
+ mark(pos);
+ setTimeout(function(){var d=document.getElementById('panoc');if(pano.setSize)pano.setSize(new naver.maps.Size(d.clientWidth,d.clientHeight));},60);}
+document.getElementById('px').onclick=function(){document.getElementById('pano').style.display='none';if(pm)pm.setMap(null);};
 </script></body></html>
