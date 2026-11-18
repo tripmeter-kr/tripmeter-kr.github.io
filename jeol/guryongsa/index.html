@@ -47,7 +47,7 @@ var map=new naver.maps.Map('map',{center:new naver.maps.LatLng(DATA.center[1],DA
 var pano=null,cur=null,path=[];
 function setT(h){map.setMapTypeId(h?naver.maps.MapTypeId.HYBRID:naver.maps.MapTypeId.NORMAL);document.getElementById('bn').className=h?'':'on';document.getElementById('bh').className=h?'on':'';}
 document.getElementById('bn').onclick=function(){setT(false)};document.getElementById('bh').onclick=function(){setT(true)};
-function show(p){cur=p;var tt=(p.kind==='sub'?'곁에 있는 곳 '+p.n+' · ':['','①','②','③','④','⑤','⑥','⑦'][p.n]+' · ')+p.name;document.getElementById('st').textContent=tt;document.getElementById('sd').textContent=p.desc||'경내 전각';
+function show(p){cur=p;var tt=(p.kind==='sub'?'작은 전각 '+p.n+' · ':['','①','②','③','④','⑤','⑥','⑦'][p.n]+' · ')+p.name;document.getElementById('st').textContent=tt;document.getElementById('sd').textContent=p.desc||'경내 전각';
  document.getElementById('sb').innerHTML='<button class="btn" onclick="openPano()">이 자리 거리뷰</button>';}
 function mk(p){var cls='m'+(p.kind==='sub'?' s':' g')+(p.hidden?' q':'')+(p.lock?' lk':'');
  var el='<div style="position:relative;--c:'+(p.color||'#E8590C')+'"><div class="'+cls+'" style="background:'+(p.lock?'':(p.color||'#E8590C'))+';--c:'+(p.color||'#E8590C')+'">'+(p.hidden?'?':p.n)+'</div><div class="t">'+p.name+(p.lock?' (스님 공간 · 밖에서만)':'')+'</div></div>';
